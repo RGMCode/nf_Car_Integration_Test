@@ -21,7 +21,9 @@ public class CarService {
         carRepository.deleteById(id);
     }
 
-    public void updateById(String id, Car car) {
+    public Car updateById(String id, Car car) {
         carRepository.updateById(id, car);
+        return car;
     }
+
 }
