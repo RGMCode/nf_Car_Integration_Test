@@ -135,7 +135,7 @@ class CarControllerTest {
     void putCar_shouldReturnChangedCar() throws Exception {
         CarRepository.addCar(new Car("1", "Opel", 4, true));
 
-        mvc.perform(MockMvcRequestBuilders.put("/api/car/put/{id}", "1")
+        mvc.perform(MockMvcRequestBuilders.put("/api/car/{id}", "1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
