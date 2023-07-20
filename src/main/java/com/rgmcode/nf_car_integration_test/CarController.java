@@ -25,11 +25,6 @@ public class CarController {
         carService.deleteById(id);
     }
 
-//    @PutMapping("/api/car/{id}")
-//    public void putById(@PathVariable String id, @RequestBody Car car) {
-//        carService.updateById(id, car);
-//    }
-
     @PutMapping("/{id}")
     public Car putById(@PathVariable String id, @RequestBody Car car) {
         return carService.updateById(id, car);
