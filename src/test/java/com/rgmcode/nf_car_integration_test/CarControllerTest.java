@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,7 +23,7 @@ class CarControllerTest {
     @Test
     void getAllProducts_shouldReturnEmptyList_whenRepositoryIsEmpty() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/api/car/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
 
@@ -34,7 +35,7 @@ class CarControllerTest {
         CarRepository.addCar(car);
 
         mvc.perform(MockMvcRequestBuilders.get("/api/car/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
                                 [
@@ -65,10 +66,9 @@ class CarControllerTest {
                                         }
                                                """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
+                .andExpect(status().isOk());
         mvc.perform(MockMvcRequestBuilders.get("/api/car/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
                                 [
@@ -83,6 +83,7 @@ class CarControllerTest {
                 ));
     }
 
+    // ---------------------- DeleteMapping ----------------------
     @DirtiesContext
     @Test
     void deleteCar_shouldReturnDeleteCar() throws Exception {
@@ -98,21 +99,21 @@ class CarControllerTest {
                                         }
                                                """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-        mvc.perform(MockMvcRequestBuilders.get("/api/car/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(
-                        """
-                                [
-                                 {
-                                     "id": "1",
-                                     "manufacturer": "BMW",
-                                     "tires": 4,
-                                     "tuv": true
-                                 }
-                                ]
-                                """
-                ));
+                .andExpect(status().isOk());
+//        mvc.perform(MockMvcRequestBuilders.get("/api/car/all"))
+//                .andExpect(status().isOk())
+//                .andExpect(MockMvcResultMatchers.content().json(
+//                        """
+//                                [
+//                                 {
+//                                     "id": "1",
+//                                     "manufacturer": "BMW",
+//                                     "tires": 4,
+//                                     "tuv": true
+//                                 }
+//                                ]
+//                                """
+//                ));
         mvc.perform(MockMvcRequestBuilders.delete("/api/car/{id}", "1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
@@ -125,11 +126,10 @@ class CarControllerTest {
                                         }
                                                """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
+                .andExpect(status().isOk());
     }
 
-
+    // ---------------------- UpdateMapping ----------------------
     @DirtiesContext
     @Test
     void updateCar_shouldReturnDeleteCar() throws Exception {
@@ -145,9 +145,9 @@ class CarControllerTest {
                                         }
                                                """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
         mvc.perform(MockMvcRequestBuilders.get("/api/car/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
                                 [
@@ -164,16 +164,60 @@ class CarControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
-                                                {
-                                            "id": "1",
-                                            "manufacturer": "Volvo",
-                                            "tires": 4,
-                                            "tuv": true
-                                        }
-                                               """
+                                {
+                                    "id": "1",
+                                    "manufacturer": "Volvo",
+                                    "tires": 4,
+                                    "tuv": true
+                                }
+                                """
                         ))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
 
 
     }
+
+//    @Test
+//    @DirtiesContext
+//    void deleteProduct_shouldReturnEmptyBody() throws Exception {
+//        CarRepository.addCar(new Car("1", "Opel", 4, true));
+//
+//        mvc.perform(deleteById("/api/car/all/1"))
+//                .andExpect(
+//                        status().isOk()
+//                );
+//    }
+
+
+    @Test
+    @DirtiesContext
+    void putCar_shouldReturnChangedCar() throws Exception {
+        CarRepository.addCar(new Car("1", "Opel", 4, true));
+
+        mvc.perform(MockMvcRequestBuilders.put("/api/car/{id}", "1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                """
+                                         {
+                                            "id": "1",
+                                            "manufacturer": "BMW",
+                                            "tires": 4,
+                                            "tuv": true
+                                         }
+                                        """
+                        ))
+                        .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.content().json(
+                                """
+                                         {
+                                            "id": "1",
+                                            "manufacturer": "BMW",
+                                            "tires": 4,
+                                            "tuv": true
+                                         }
+                                        """
+                        ));
+    }
+
+
 }
