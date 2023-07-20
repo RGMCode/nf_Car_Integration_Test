@@ -8,4 +8,11 @@ public class Car {
     private String manufacturer;
     private int tires;
     private boolean tuv;
+
+    public Car(String id, String manufacturer, int tires, boolean tuv) {
+        this.id = id;
+        this.manufacturer = manufacturer;
+        this.tires = tires;
+        this.tuv = tuv;
+    }
 }

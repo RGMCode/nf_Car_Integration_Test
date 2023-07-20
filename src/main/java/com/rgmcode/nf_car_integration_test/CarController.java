@@ -10,13 +10,13 @@ public class CarController {
 
     private CarService carService = new CarService();
 
-    @PostMapping
+    @PostMapping("/post")
     public void post(@RequestBody Car car) {
         carService.addCar(car);
     }
 
-    @GetMapping
-    public List<Car> get() {
+    @GetMapping("/all")
+    public List<Car> getAll() {
         return carService.getCars();
     }
 

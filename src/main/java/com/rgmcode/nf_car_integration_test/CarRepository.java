@@ -7,9 +7,9 @@ import java.util.List;
 
 @Repository
 public class CarRepository {
-    private List<Car> cars = new ArrayList<>();
+    private static List<Car> cars = new ArrayList<>();
 
-    public void addCar(Car car) {
+    public static void addCar(Car car) {
         cars.add(car);
     }
 

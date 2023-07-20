@@ -10,7 +10,7 @@ public class CarService {
     private CarRepository carRepository = new CarRepository();
 
     public void addCar(Car car) {
-        carRepository.addCar(car);
+        CarRepository.addCar(car);
     }
 
     public List<Car> getCars() {
