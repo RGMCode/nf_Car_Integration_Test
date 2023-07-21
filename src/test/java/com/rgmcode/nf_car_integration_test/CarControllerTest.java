@@ -161,7 +161,7 @@ class CarControllerTest {
     }
 
 
-    //    @Test
+//    @Test
 //    @DirtiesContext
 //    void deleteProduct_shouldReturnEmptyBody() throws Exception {
 //        CarRepository.addCar(new Car("1", "Opel", 4, true));
@@ -171,7 +171,5 @@ class CarControllerTest {
 //                        status().isOk()
 //                );
 //    }
-
-
 
 }
